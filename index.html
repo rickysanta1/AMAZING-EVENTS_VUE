@@ -5,112 +5,234 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Amazing Events</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <title>Amazing Events</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&&family=Raleway:wght@400;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="/styles/style.css">
+
+
   <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
 
 </head>
 
-<body class="bg-gradient text-white">
-  <header>
-    <nav class="navbar navbar-bg-body-success-subtle bg-gradient">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="../assets/img/logo.png" alt="Logo" width="100" height="40">
-        </a>
-        <ul class="nav nav-pills text-white justify-content-sm-end">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./upcoming_events.html">Upcoming Events</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./past_events.html">Past Events</a>
-          </li>
-          <a class="nav-link" href="./contact.html">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./stats.html">Stats</a>
-        </ul>
+<body>
+
+  <header class="container-fluid d-flex flex-column bg-transparent ">
+
+    <nav class="navbar navbar-expand-md text-nowrap" aria-label="Barra de Navegación">
+      <div class="container-fluid ">
+        <div class="col-3 col-md-5 col-lg-6 col-xl-7">
+          <a class="navbar-brand" href="#"><img src="../assets/img/logo.png" alt="Logo" width="150"></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03"
+          aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="col-auto collapse navbar-collapse" id="navbarsExample03">
+          <ul class="navbar-nav me-auto mb-2 mb-sm-0 ">
+            <li class="nav-item m-lg-2">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item m-lg-2">
+              <a class="nav-link" href="./upcoming_events.html">Upcoming Events</a>
+            </li>
+            <li class="nav-item m-lg-2">
+              <a class="nav-link" href="./past_events.html">Past Events</a>
+            </li>
+            <li class="nav-item m-lg-2">
+              <a class="nav-link" href="./contact.html">Contact</a>
+            </li>
+            <li class="nav-item m-lg-2">
+              <a class="nav-link" href="./stats.html">Stats</a>
+            </li>
+          </ul>
+
+        </div>
+
       </div>
     </nav>
 
   </header>
-  <div class="text-center bg-info border border-info border-start-0">
-    <h1>Home</h1>
-  </div>
-  <section>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-      <label class="form-check-label" for="inlineCheckbox1">Cinema</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-      <label class="form-check-label" for="inlineCheckbox2">Maraton</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-      <label class="form-check-label" for="inlineCheckbox3">Music Concert</label>
-    </div>
-    <div class="input-group justify-content-sm-end">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search">
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </div>
-  </section>
-  <main class="container bg-success bg-gradient">
-    <div class="d-flex flex-wrap gap-3 justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img src="../assets/img/cinema.jpg" class="card-img-top" id="inlineCheckbox1">
-        <div class="card-body">
-          <h5 class="card-title text-black">Card title</h5>
-          <p class="card-text text-black">Some quick example text to build on the card title and make up the
-            bulk of the card's content.</p>
-          <p class="card-text text-black">$500</p>
-          <a href="./details.html" class="btn btn-primary justify-content-sm-end">Datails</a>
+
+  <section id="hero" class="d-flex flex-column justify-content-end align-items-center">
+    <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
+
+
+      <div class="carousel-item active">
+        <div class="carousel-container">
+          <h1 class="animate__animated animate__fadeInDown">Home</h1>
         </div>
-        <div class="card" style="width: 18rem;">
-          <img src="../assets/img/cuseum_Ttur.jpg" class="card-img-top" alt="...">
+      </div>
+
+
+      <div class="carousel-item">
+        <div class="carousel-container">
+          <h2 class="animate__animated animate__fadeInDown">Home</h2>
+        </div>
+      </div>
+
+
+      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+        <svg class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 320 512">
+          <path
+            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+        </svg>
+      </a>
+
+      <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+
+        <svg class="carousel-control-next-icon bx bx-chevron-right" aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+          <path
+            d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+        </svg>
+      </a>
+
+    </div>
+    <div class="waves"></div>
+  </section>
+  <main class="container-fluid">
+
+    <div class="m-3">
+
+
+      <form role="search">
+        <div class="container-fluid d-lg-inline-flex  justify-content-lg-between align-items-center">
+          <div class="category col-lg-6">
+            <div class="form-group">
+
+              <input class="form-check-input" type="checkbox" value="1" id="category1">
+              <label class="me-3 form-label" for="category1">
+                Category
+              </label>
+
+
+              <input class="form-check-input" type="checkbox" value="2" id="category2">
+              <label class="me-3 form-label" for="category2">
+                Category
+              </label>
+
+
+              <input class="form-check-input" type="checkbox" value="3" id="category3">
+              <label class="me-3 form-label" for="category3">
+                Category
+              </label>
+
+
+              <input class="form-check-input" type="checkbox" value="4" id="category4">
+              <label class="me-3 form-label" for="category4">
+                Category
+              </label>
+
+
+              <input class="form-check-input" type="checkbox" value="5" id="category5">
+              <label class="me-3 form-label" for="category5">
+                Category
+              </label>
+            </div>
+          </div>
+          <div class="category col-lg-5">
+            <div class="d-flex form-group">
+
+              <input class="form-control  me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-secondary" type="submit">
+                <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                </svg>
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <section>
+      <div class="card-deck d-flex flex-wrap gap-3 justify-content-center mb-3">
+
+        <div class="card bg-primary">
+          <img alt="cinema" src="../assets/img/cinema.jpg" class="card-img-top" id="inlineCheckbox1">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the
+              bulk of the card's content.</p>
+            <p class="card-precio">$500</p>
+            <a href="./details.html" class="btn btn-secondary">Datails</a>
+          </div>
+        </div>
+        <div class="card bg-primary">
+          <img src="../assets/img/museum_tour.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up
+              the bulk of the card's content.</p>
+            <p class="card-precio">$500</p>
+            <a href="./details.html" class="btn btn-secondary">Datails</a>
+          </div>
+        </div>
+        <div class="card bg-primary">
+          <img src="../assets/img/music_concert.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title text-black">Card title</h5>
-            <p class="card-text text-black">Some quick example text to build on the card title and make up
-              the bulk of the card's content.</p>
-            <p class="card-text text-black">$500</p>
-            <a href="./details.html" class="btn btn-primary justify-content-sm-end">Datails</a>
+            <p class="card-text">Some quick example text to build on the card title and make
+              up the bulk of the card's content.</p>
+            <p class="card-precio">$500</p>
+            <a href="./details.html" class="btn btn-secondary">Datails</a>
           </div>
-          <div class="card" style="width: 18rem;">
-            <img src="../assets/img/music_concert.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title text-black">Card title</h5>
-              <p class="card-text text-black">Some quick example text to build on the card title and make
-                up the bulk of the card's content.</p>
-              <p class="card-text text-black">$500</p>
-              <a href="./details.html" class="btn btn-primary justify-content-sm-end">Datails</a>
-            </div>
-            <div class="card" style="width: 18rem;">
-              <img src="../assets/img/costume_carty.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title text-black">Card title</h5>
-                <p class="card-text text-black">Some quick example text to build on the card title and
-                  make up the bulk of the card's content.</p>
-                <p class="card-text text-black">$500</p>
-                <a href="./details.html" class="btn btn-primary justify-content-sm-end">Datails</a>
-              </div>
-            </div>
+        </div>
+        <div class="card bg-primary">
+          <img src="../assets/img/costume_party.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and
+              make up the bulk of the card's content.</p>
+            <p class="card-precio">$500</p>
+            <a href="./details.html" class="card-link btn btn-secondary">Datails</a>
+          </div>
+        </div>
+        <div class="card bg-primary">
+          <img src="../assets/img/food_fair.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and
+              make up the bulk of the card's content.</p>
+            <p class="card-precio">$500</p>
+            <a href="./details.html" class="card-link btn btn-secondary">Datails</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer></footer>
-
-
-
-
-
-
-
-
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container-fluid d-lg-inline-flex  justify-content-lg-between align-items-center">
+      <div class="social-links">
+        <a href="#" class="instagram"><i class="instagram"><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512">
+              <path
+                d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+            </svg></i></a>
+        <a href="#" class="facebook"><i class="facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path
+                d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
+            </svg></i></a>
+        <a href="#" class="whatsapp"><i class="whatsapp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              <path
+                d="M224 122.8c-72.7 0-131.8 59.1-131.9 131.8 0 24.9 7 49.2 20.2 70.1l3.1 5-13.3 48.6 49.9-13.1 4.8 2.9c20.2 12 43.4 18.4 67.1 18.4h.1c72.6 0 133.3-59.1 133.3-131.8 0-35.2-15.2-68.3-40.1-93.2-25-25-58-38.7-93.2-38.7zm77.5 188.4c-3.3 9.3-19.1 17.7-26.7 18.8-12.6 1.9-22.4.9-47.5-9.9-39.7-17.2-65.7-57.2-67.7-59.8-2-2.6-16.2-21.5-16.2-41s10.2-29.1 13.9-33.1c3.6-4 7.9-5 10.6-5 2.6 0 5.3 0 7.6.1 2.4.1 5.7-.9 8.9 6.8 3.3 7.9 11.2 27.4 12.2 29.4s1.7 4.3.3 6.9c-7.6 15.2-15.7 14.6-11.6 21.6 15.3 26.3 30.6 35.4 53.9 47.1 4 2 6.3 1.7 8.6-1 2.3-2.6 9.9-11.6 12.5-15.5 2.6-4 5.3-3.3 8.9-2 3.6 1.3 23.1 10.9 27.1 12.9s6.6 3 7.6 4.6c.9 1.9.9 9.9-2.4 19.1zM400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM223.9 413.2c-26.6 0-52.7-6.7-75.8-19.3L64 416l22.5-82.2c-13.9-24-21.2-51.3-21.2-79.3C65.4 167.1 136.5 96 223.9 96c42.4 0 82.2 16.5 112.2 46.5 29.9 30 47.9 69.8 47.9 112.2 0 87.4-72.7 158.5-160.1 158.5z" />
+            </svg></i></a>
+      </div>
+      <div class="text-black">
+        &copy; Copyright <strong><span>Cohort</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer><!-- End Footer -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
