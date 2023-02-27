@@ -1,0 +1,20 @@
+{
+  "name": "amazing-events_gamarra",
+  "version": "1.0.0",
+  "description": "Frontend => Introduction to JavaScript Development [FE14-TN]",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch --style compressed styles/style.scss styles/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rickysanta1/AMAZING-EVENTS_GAMARRA.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rickysanta1/AMAZING-EVENTS_GAMARRA/issues"
+  },
+  "homepage": "https://github.com/rickysanta1/AMAZING-EVENTS_GAMARRA#readme"
+}
