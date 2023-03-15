@@ -1,6 +1,5 @@
 const eventosHtml = filtroEventos;
 const cardConatiner = document.querySelector(".card-contenido");
-//const toCapitalCase = (letra) => letra.charAt(0).toUpperCase() + letra.slice(1);
 const inputSearch = document.getElementById("inputSearch");
 const checkboxCategorias = document.querySelector(".checkboxCat");
 const form = document.forms[0];
@@ -9,22 +8,16 @@ let eventosFiltrados = [];
 
 //filtrado categorias unicas
 let arrayCateg = data.events.map((e) => e.category);
-let arrayFiltrado = arrayCateg.filter(function (item, index) {
-  return arrayCateg.indexOf(item) === index;
+let arrayFiltrado = new Set(arrayCateg);
+let cats = "";
+arrayFiltrado.forEach((e, i) => {
+  cats += `              <label class="me-2 form-label">
+     <input class="me-1 form-check-input" type="checkbox" value="${e}" id="category${
+    i + 1
+  }">${e}
+               </label>`;
 });
-//
-
-const categorias = arrayFiltrado.reduce((acc, arr, i) => {
-  return (
-    acc +
-    `              <label class="me-2 form-label">
-    <input class="me-1 form-check-input" type="checkbox" value="${arr}" id="category${
-      i + 1
-    }">${arr}
-              </label>`
-  );
-}, "");
-checkboxCategorias.innerHTML = categorias;
+checkboxCategorias.innerHTML = cats;
 
 //funcion de renderizado de cada html
 const renderPagina = (array, contenedor, busqueda = false, categ = []) => {
@@ -53,8 +46,8 @@ const renderPagina = (array, contenedor, busqueda = false, categ = []) => {
     <div class="card-body">
     <h5 class="card-title">${cadaElem.name}</h5>
     <p class="card-text">${cadaElem.description}</p>
-    <p class="card-precio">$${cadaElem.price}</p>
-    <a alt="Detail" href="./details.html?id=${cadaElem._id}" class="btn btn-secondary hover">Datails</a>
+    <p class="d-flex align-items-center justify-content-between card-precio">Price: $${cadaElem.price}
+    <a alt="Detail" href="./details.html?id=${cadaElem._id}" class="btn btn-secondary hover">Datails</a></p>
     </div>
     
     </div>
@@ -94,14 +87,9 @@ checkboxCategorias.addEventListener("change", (e) => {
 //funcionde busqueda gral
 const busqueda = (array) => {
   let valorIngresado = inputSearch.value.toLowerCase();
-
-  filtroBusqueda = [];
-  array.forEach((elem) => {
-    let names = elem.name.toLowerCase();
-    if (names.includes(valorIngresado)) {
-      filtroBusqueda.push(elem);
-    }
-  });
+  let filtroBusqueda = array.filter((elem) =>
+    elem.name.toLowerCase().includes(valorIngresado)
+  );
   renderPagina(filtroBusqueda, cardConatiner);
 };
 //busqueda boton
