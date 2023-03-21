@@ -1,16 +1,35 @@
-const eventos = data.events;
 const cardConatiner = document.querySelector(".card-contenido");
-const queryString = document.location.search;
-const id = new URLSearchParams(queryString).get("id");
-const detail = eventos.find((item) => item._id === parseInt(id));
 
+const apiDatos = async () => {
+  try {
+    let response = await fetch("https://mindhub-xj03.onrender.com/api/amazing");
+    return await response.json();
+  } catch (error) {
+    if (error) {
+      let response = await fetch("./assets/js/amazing.json");
+      return await response.json();
+    }
+  }
+};
+//funcion principal
+async function fetchAPI() {
+  const queryString = document.location.search;
+  const id = new URLSearchParams(queryString).get("id");
+  try {
+    let data = await apiDatos();
+    const detail = data.events.find((item) => item._id === parseInt(id));
+    renderPagina(detail, cardConatiner);
+  } catch (error) {
+    console.log("🚀 ~ file: index_data.js:11 ~ fetchAPI ~ error:", error);
+  }
+}
 const renderPagina = (array, contenedor) => {
   return (contenedor.innerHTML = `<div class="card mb-3 bg-success" style="width:80%">
     <div class="row g-0">
-    <div class="col-md-5">
-          <img alt="${array.name}" src="${array.image}" class="card-img-top">
+    <div class="col-md-6">
+          <img alt="${array.name}" src="${array.image}" class="card-img-top" id="detail-img">
     </div>
-    <div class="col-md-7">
+    <div class="col-md-6">
         <div class="card-body">
     <h5 class="mb-4 card-title">${array.name}</h5>
     <p class="card-subtitle mb-2 text-wrap"><strong>Description:</strong> ${array.description}</p>
@@ -25,4 +44,4 @@ const renderPagina = (array, contenedor) => {
     </div>
     `);
 };
-renderPagina(detail, cardConatiner);
+fetchAPI();

@@ -1,4 +1,4 @@
-const eventosHtml = filtroEventos;
+const eventosHtml = [];
 const cardConatiner = document.querySelector(".card-contenido");
 const inputSearch = document.getElementById("inputSearch");
 const checkboxCategorias = document.querySelector(".checkboxCat");
@@ -6,21 +6,8 @@ const form = document.forms[0];
 let arrayCheckboxSelect = [];
 let eventosFiltrados = [];
 
-//filtrado categorias unicas
-let arrayCateg = data.events.map((e) => e.category);
-let arrayFiltrado = new Set(arrayCateg);
-let cats = "";
-arrayFiltrado.forEach((e, i) => {
-  cats += `              <label class="me-2 form-label">
-     <input class="me-1 form-check-input" type="checkbox" value="${e}" id="category${
-    i + 1
-  }">${e}
-               </label>`;
-});
-checkboxCategorias.innerHTML = cats;
-
 //funcion de renderizado de cada html
-const renderPagina = (array, contenedor, busqueda = false, categ = []) => {
+renderPagina = (array, contenedor, busqueda = false, categ = []) => {
   const success = document.getElementById("success");
 
   if (busqueda)
@@ -57,11 +44,27 @@ const renderPagina = (array, contenedor, busqueda = false, categ = []) => {
   return (contenedor.innerHTML = cardsFiltrado);
 };
 
-eventosFiltrados = eventosFiltrados.length > 0 ? eventosFiltrados : eventosHtml;
+//eventosFiltrados = eventosFiltrados.length > 0 ? eventosFiltrados : eventosHtml;
 ///renderiza al inicio segun html
-renderPagina(eventosFiltrados, cardConatiner);
+//renderPagina(eventosFiltrados, cardConatiner);
 
 //filtros en base a categorias en ckeckboxs
+const busquedaCheckbox = (array) => {
+  eventosFiltrados = array.filter((categorias) =>
+    arrayCheckboxSelect.includes(categorias.category)
+  );
+  //
+  if (eventosFiltrados.length !== 0) {
+    renderPagina(eventosFiltrados, cardConatiner, true, arrayCheckboxSelect);
+  } else {
+    eventosFiltrados = array;
+    renderPagina(eventosFiltrados, cardConatiner, true, arrayCheckboxSelect);
+  }
+  //busqueda si hay valor en el input
+  if (inputSearch.value != "") {
+    busqueda(eventosFiltrados);
+  }
+};
 checkboxCategorias.addEventListener("change", (e) => {
   var value = e.target.value;
   if (e.target.checked) {
@@ -69,20 +72,7 @@ checkboxCategorias.addEventListener("change", (e) => {
   } else {
     arrayCheckboxSelect = arrayCheckboxSelect.filter((item) => item !== value);
   }
-  eventosFiltrados = eventosHtml.filter((categorias) =>
-    arrayCheckboxSelect.includes(categorias.category)
-  );
-  //
-  if (eventosFiltrados.length !== 0) {
-    renderPagina(eventosFiltrados, cardConatiner, true, arrayCheckboxSelect);
-  } else {
-    eventosFiltrados = eventosHtml;
-    renderPagina(eventosFiltrados, cardConatiner, true, arrayCheckboxSelect);
-  }
-  //busqueda si hay valor en el input
-  if (inputSearch.value != "") {
-    busqueda(eventosFiltrados);
-  }
+  busquedaCheckbox(eventosFiltrados);
 });
 //funcionde busqueda gral
 const busqueda = (array) => {

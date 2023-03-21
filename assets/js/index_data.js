@@ -1,1 +1,0 @@
-const filtroEventos = data.events;
