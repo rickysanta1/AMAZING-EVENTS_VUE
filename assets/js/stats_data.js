@@ -17,6 +17,9 @@ async function fetchAPI() {
   const filtroEventsPasados = data.events.filter(
     (elem) => elem.date < diaActual
   );
+  const filtroEventsFuturos = data.events.filter(
+    (evento) => evento.date > diaActual
+  );
 
   // Maximo valor
   const maxValue = filtroEventsPasados.reduce((max, cap) => {
@@ -51,20 +54,15 @@ async function fetchAPI() {
   const maxPorc = ((asistenciaMax * 100) / capacMax).toFixed(2);
   const minPorc = ((asistenciaMin * 100) / capacMin).toFixed(2);
 
-  const upcoming = data.events.filter(
-    (evento) => evento.date > data.currentDate
-  );
-  const past = data.events.filter((evento) => evento.date < data.currentDate);
-
-  let result = categoriasTotal(
-    upcoming.sort((a, b) => {
+  let categFuturos = categoriasTotal(
+    filtroEventsFuturos.sort((a, b) => {
       if (a.category < b.category) return -1;
       else if (a.category > b.category) return 1;
       else return 0;
     })
   );
-  renderTabla(upcomingTab, result);
-  renderTabla(pastTab, categoriasTotal(past));
+  renderTabla(upcomingTab, categFuturos);
+  renderTabla(pastTab, categoriasTotal(filtroEventsPasados));
 
   eventosTabla.innerHTML += `
     <tr><td>${nameMax}: (${maxPorc}%) </td>

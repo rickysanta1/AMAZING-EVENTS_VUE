@@ -19,10 +19,12 @@ const renderTarjetas = (array, contenedor, categ = []) => {
   if (categ.length)
     success.innerHTML =
       categ.length > 0 && categ.length < 7
-        ? `Resultados en Categorias: ${categ.join(", ")}`
-        : `Resultados en todas las Categorias:`;
+        ? `Results in Categories: <span style="font-weight:720;">${categ.join(
+            ", "
+          )}</span>`
+        : `Results in all Categories:`;
   if (array.length === 0) {
-    let resultadoBusq = `<div style="text-align:center;height: 40vw;">
+    let resultadoBusq = `<div style="margin-top:2rem;text-align:center;height: 40vw;">
          
       <h5>Sorry, No events found.</h5>
       <p class="card-text">Adjust filters to find an event.</p>
@@ -146,7 +148,7 @@ async function fetchAPI() {
     console.log("🚀 ~ file: index_data.js:11 ~ fetchAPI ~ error:", error);
   }
 }
-let eventosaImprimir = [];
+//let eventosaImprimir = [];
 const checkboxCategorias = document.querySelector(".checkboxCat");
 const cardConatiner = document.querySelector(".card-contenido");
 const inputSearch = document.getElementById("inputSearch");
