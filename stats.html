@@ -78,8 +78,10 @@
     <div class="waves"></div>
   </section>
 
-  <main class="container-fluid mt-4">
-    <div id="tablas">
+  <main id="render-pagina" class="container-fluid mt-4">
+    <div v-if="!loading" style="margin-top:2rem;text-align:center;height: 40vw;"><img src="./assets/img/spinner.svg"
+        width="100"></div>
+    <div id="tablas" v-else>
       <table class="table table-responsive">
         <thead>
           <tr>
@@ -92,7 +94,12 @@
             <td>Events with lowest percentage of attendance</td>
             <td>Event with larger capacity</td>
           </tr>
-
+          <tr>
+            <td>{{nameMax}}: ({{maxPorc}}%) </td>
+            <td>{{nameMin}}: ({{minPorc}}%)</td>
+            <td>{{name}}: ({{cap}})
+            </td>
+          </tr>
 
         </tbody>
       </table>
@@ -105,7 +112,24 @@
           </tr>
         </thead>
         <tbody id="upcoming">
-
+          <tr class="titulos">
+            <td>Categories</td>
+            <td>Revenues</td>
+            <td>Percentage of attendance</td>
+          </tr>
+          <template v-for="(category,i) of categFuturos" :key="i">
+            <tr>
+              <td>{{category.name}}</td>
+              <td>
+                <slot>$</slot>{{category.total}}
+              </td>
+              <td>{{(
+                (category.asistenciaTotal * 100) /
+                category.capacidadTotal
+                ).toFixed(2)}}%
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
 
@@ -118,7 +142,24 @@
           </tr>
         </thead>
         <tbody id="past">
-
+          <tr class="titulos">
+            <td>Categories</td>
+            <td>Revenues</td>
+            <td>Percentage of attendance</td>
+          </tr>
+          <template v-for="(category,i) of categPasados" :key="i">
+            <tr>
+              <td>{{category.name}}</td>
+              <td>
+                <slot>$</slot>{{category.total}}
+              </td>
+              <td>{{(
+                (category.asistenciaTotal * 100) /
+                category.capacidadTotal
+                ).toFixed(2)}}%
+              </td>
+            </tr>
+          </template>
 
         </tbody>
       </table>
@@ -154,7 +195,8 @@
   </footer><!-- End Footer -->
 
   <script src="./assets/js/amazing.json"></script>
-  <script src="./assets/js/stats_data.js"></script>
+  <!-- <script src="./assets/js/stats_data.js"></script> -->
+  <script type="module" src="./assets/js/functions.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

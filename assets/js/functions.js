@@ -1,172 +1,212 @@
-//renderiza categorias
-const catUnicas = (array, contenedor) => {
-  let arrayCateg = array.map((e) => e.category);
-  let arrayFiltrado = new Set(arrayCateg);
-  let cats = "";
-  arrayFiltrado.forEach((e, i) => {
-    cats += `              <label class="me-2 form-label">
-     <input class="me-1 form-check-input" type="checkbox" value="${e}" id="category${
-      i + 1
-    }">${e}
-               </label>`;
-  });
-  return (contenedor.innerHTML = cats);
-};
-//renderiza las tarjetas
-const renderTarjetas = (array, contenedor, categ = []) => {
-  const success = document.getElementById("success");
-  success.innerHTML = "";
-  if (categ.length)
-    success.innerHTML =
-      categ.length > 0 && categ.length < 7
-        ? `Results in Categories: <span style="font-weight:720;">${categ.join(
-            ", "
-          )}</span>`
-        : `Results in all Categories:`;
-  if (array.length === 0) {
-    let resultadoBusq = `<div style="margin-top:2rem;text-align:center;height: 40vw;">
-         
-      <h5>Sorry, No events found.</h5>
-      <p class="card-text">Adjust filters to find an event.</p>
-     
-      </div>`;
-    return (cardConatiner.innerHTML = resultadoBusq);
-  }
-  const cardsFiltrado = array.reduce((acc, cadaElem) => {
-    return (
-      acc +
-      `<div class="card bg-success">
-    <img alt="${cadaElem.name}" src="${cadaElem.image}">
-    <div class="card-body d-flex flex-column">
-    <h5 class="card-title">${cadaElem.name}</h5>
-    <p class="card-text">${cadaElem.description}</p>
-    <div class="mt-auto fill-space">
-    <div class="d-flex align-items-center justify-content-between mx-0">
-    <p class="card-precio">Price: $${cadaElem.price}</p>
-    <p><a alt="Detail" href="./details.html?id=${cadaElem._id}" class="btn btn-secondary hover">Datails</a></p>
-    </div>
-    </div>
-     </div>
-        </div>`
-    );
-  }, "");
-  return (contenedor.innerHTML = cardsFiltrado);
-};
-//retorna checkbox tildados
-const checkboxTildados = () => {
-  let tildados = Array.from(document.querySelectorAll('input[type="checkbox"]'))
-    .filter((checkbox) => checkbox.checked)
-    .map((checkbox) => checkbox.value);
-  return tildados;
-};
-//filtra texto en busqueda
-const filtrarEventosPorTexto = (tarjetas, arrayTexto) => {
-  const tarjetasconTexto = tarjetas.filter((evento) => {
-    const palabras = arrayTexto.every((palabra) => {
-      return evento.name.toLowerCase().includes(palabra);
-    });
-    return palabras;
-  });
-  return tarjetasconTexto;
-};
-//Resalta texto encontrado en busqueda
-function resaltaBusqueda(clase, text) {
-  let arrayClassTitulos = Array.from(document.querySelectorAll(clase));
-  arrayClassTitulos.forEach((clases) => {
-    let innerHTML = clases.innerHTML;
-    let index = innerHTML.toLowerCase().indexOf(text.toLowerCase());
+import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 
-    if (index >= 0) {
-      innerHTML = ` ${innerHTML.substring(
-        0,
-        index
-      )}<span style="text-decoration: underline red;font-weight: 710">
-    ${innerHTML.substring(
-      index,
-      index + text.length
-    )}</span>${innerHTML.substring(index + text.length)}`;
-      clases.innerHTML = innerHTML;
-    } else {
-      clases.innerHTML = innerHTML;
-    }
-  });
-}
-const filtrarEventos = (eventos, textoABuscar) => {
-  const tildados = checkboxTildados();
-  const texto = textoABuscar.trim().toLowerCase();
-  const arrayTexto = texto.split(" ");
-  let tarjetasFiltradas = eventos;
-  if (tildados.length) {
-    tarjetasFiltradas = tarjetasFiltradas.filter((evento) =>
-      tildados.includes(evento.category)
-    );
-  }
-  tarjetasFiltradas = filtrarEventosPorTexto(tarjetasFiltradas, arrayTexto);
-  if (tarjetasFiltradas) {
-    renderTarjetas(tarjetasFiltradas, cardConatiner, tildados);
-    dataInput = inputSearch.value;
-    resaltaBusqueda(".card-title", dataInput);
-  }
-};
-//captura el nombre de la pagina actual
-function paginas() {
-  let url = location.pathname.split("/").pop();
-  return url;
-}
-/////// FUNCION POR SI FALLA LA API
-const apiDatos = async () => {
-  try {
-    let response = await fetch("https://mindhub-xj03.onrender.com/api/amazing");
-    return await response.json();
-  } catch (error) {
-    if (error) {
-      let response = await fetch("./assets/js/amazing.json");
-      return await response.json();
-    }
-  }
-};
-//funcion principal
+const app = createApp({
+  data() {
+    return {
+      paginas: location.pathname.split("/").pop(),
+      urlApi: "https://mindhub-xj03.onrender.com/api/amazing",
+      localApi: "./assets/js/amazing.json",
+      event: [],
+      filteredEvents: [],
+      checked: [],
+      categories: null,
+      valueSearch: "",
+      info: null,
+      loading: false,
+      errored: false,
+      textoNoencontrado: "Sorry, No events found.",
+      textoAjuste: "Adjust filters to find an event.",
+      nameMax: null,
+      capacMax: null,
+      asistenciaMax: null,
+      nameMin: null,
+      capacMin: null,
+      asistenciaMin: null,
+      maxPorc: null,
+      minPorc: null,
+      name: null,
+      cap: null,
+      categFuturos: {},
+      categPasados: {},
+    };
+  },
+  created() {
+    this.apiDatos();
+  },
+  methods: {
+    apiDatos() {
+      fetch(this.urlApi)
+        .then((response) => response.json())
+        .then((datosApi) => {
+          this.event = datosApi.events;
+          this.currentDate = datosApi.currentDate;
+          this.cargaPagina();
+        })
+        .catch((error) => {
+          this.errored = true;
+          console.log(error);
+        })
+        .finally(() => {
+          if (!this.event.length) {
+            fetch(this.localApi)
+              .then((response) => response.json())
+              .then((api) => {
+                this.event = api.events;
+                this.filteredEvents = this.event;
+                this.currentDate = api.currentDate;
+                this.cargaPagina();
+              });
+          }
+        });
+    },
+    cargaPagina: function () {
+      this.loading = true;
+      //segun la pagina que estamos carga un array especifico
 
-async function fetchAPI() {
-  try {
-    let data = await apiDatos();
-    //segun la pagina que estamos carga un array especifico
-    if (paginas() == "index.html" || paginas() == "") {
-      eventosaImprimir = data.events;
-    } else if (paginas() == "upcoming_events.html") {
-      eventosaImprimir = data.events.filter(
-        (evento) => evento.date > data.currentDate
+      if (this.paginas.includes("index") || this.paginas == "") {
+        this.filteredEvents = this.event;
+      } else if (this.paginas.includes("upcoming_events")) {
+        this.filteredEvents = this.event.filter(
+          (evento) => evento.date > this.currentDate
+        );
+      } else if (this.paginas.includes("past_events")) {
+        this.filteredEvents = this.event.filter(
+          (evento) => evento.date < this.currentDate
+        );
+      } else if (this.paginas.includes("stats")) {
+        const filtroEventsPasados = this.event.filter(
+          (elem) => elem.date < this.currentDate
+        );
+
+        const filtroEventsFuturos = this.event.filter(
+          (elem) => elem.date > this.currentDate
+        );
+        const maxValue = filtroEventsPasados.reduce((max, cap) => {
+          return cap.capacity > max.capacity ? cap : max;
+        });
+        const { name, capacity: cap } = maxValue;
+        this.name = name;
+        this.cap = cap;
+        const porcentajes = (array, mayor) => {
+          const calcPorcentaje = array.reduce((max, cap) => {
+            const capPorc = (cap.assistance * 100) / cap.capacity;
+            const maxPorc = (max.assistance * 100) / max.capacity;
+            if (mayor) {
+              return capPorc > maxPorc ? cap : max;
+            } else {
+              return capPorc < maxPorc ? cap : max;
+            }
+          });
+
+          return calcPorcentaje;
+        };
+        const {
+          name: nameMax,
+          capacity: capacMax,
+          assistance: asistenciaMax,
+        } = porcentajes(filtroEventsPasados, true);
+        const {
+          name: nameMin,
+          capacity: capacMin,
+          assistance: asistenciaMin,
+        } = porcentajes(filtroEventsPasados, false);
+        this.nameMax = nameMax;
+        this.capacMax = capacMax;
+        this.asistenciaMax = asistenciaMax;
+        this.nameMin = nameMin;
+        this.capacMin = capacMin;
+        this.asistenciaMin = asistenciaMin;
+        this.maxPorc = ((asistenciaMax * 100) / capacMax).toFixed(2);
+        this.minPorc = ((asistenciaMin * 100) / capacMin).toFixed(2);
+
+        this.categFuturos = this.categoriasTotal(
+          filtroEventsFuturos.sort((a, b) => {
+            if (a.category < b.category) return -1;
+            else if (a.category > b.category) return 1;
+            else return 0;
+          })
+        );
+        this.categPasados = this.categoriasTotal(filtroEventsPasados);
+      } else if (this.paginas.includes("details")) {
+        const queryString = document.location.search;
+        const id = new URLSearchParams(queryString).get("id");
+        this.filteredEvents = this.event.find(
+          (item) => item._id === parseInt(id)
+        );
+      }
+    },
+    filtros: function () {
+      let filtroCatego = this.filteredEvents.filter((event) => {
+        return (
+          (this.checked.includes(event.category) ||
+            this.checked.length === 0) &&
+          event.name.toLowerCase().includes(this.valueSearch.toLowerCase())
+        );
+      });
+
+      this.resaltaBusqueda();
+      return filtroCatego;
+    },
+    resaltaBusqueda() {
+      let text = this.valueSearch;
+      let arrayClassTitulos = Array.from(
+        document.querySelectorAll(".card-title")
       );
-    } else if (paginas() == "past_events.html") {
-      eventosaImprimir = data.events.filter(
-        (evento) => evento.date < data.currentDate
-      );
-    }
-    catUnicas(eventosaImprimir, checkboxCategorias);
-    renderTarjetas(eventosaImprimir, cardConatiner);
-  } catch (error) {
-    console.log("🚀 ~ file: index_data.js:11 ~ fetchAPI ~ error:", error);
-  }
-}
-//let eventosaImprimir = [];
-const checkboxCategorias = document.querySelector(".checkboxCat");
-const cardConatiner = document.querySelector(".card-contenido");
-const inputSearch = document.getElementById("inputSearch");
-const form = document.querySelector('button[type="submit"]');
-let dataInput = "";
-form.addEventListener("click", (e) => {
-  e.preventDefault();
-  dataInput = inputSearch.target.value;
-  filtrarEventos(eventosaImprimir, dataInput);
-});
+      arrayClassTitulos.forEach((clases) => {
+        let textCont = clases.textContent;
+        let index = textCont.toLowerCase().indexOf(text.toLowerCase());
 
-checkboxCategorias.addEventListener("change", () => {
-  filtrarEventos(eventosaImprimir, dataInput);
-});
+        if (index >= 0) {
+          textCont = ` ${textCont.substring(
+            0,
+            index
+          )}<span style="text-decoration: underline red;font-weight: 710">${textCont.substring(
+            index,
+            index + text.length
+          )}</span>${textCont.substring(index + text.length)}`;
+          clases.innerHTML = textCont;
+        } else {
+          clases.innerHTML = textCont;
+        }
+      });
+    },
+    categoriasTotal(eventos) {
+      return eventos.reduce((totals, event) => {
+        const { category } = event;
+        let asistenciaTotal =
+          event.estimate != null ? event.estimate : event.assistance;
+        let capacidadTotal = event.capacity;
+        let total = event.price * asistenciaTotal;
+        let name = category;
+        if (!totals[category]) {
+          totals[category] = { name, total, asistenciaTotal, capacidadTotal };
+        } else {
+          totals[category].name = name;
+          totals[category].total += total;
+          totals[category].asistenciaTotal += asistenciaTotal;
+          totals[category].capacidadTotal += capacidadTotal;
+        }
 
-inputSearch.addEventListener("keyup", (event) => {
-  dataInput = event.target.value;
-
-  filtrarEventos(eventosaImprimir, dataInput);
-});
-fetchAPI();
+        return totals;
+      }, {});
+    },
+  },
+  computed: {
+    compCatego() {
+      return [...new Set(this.event.map((event) => event.category))];
+    },
+    mensaje() {
+      if (this.checked.length) {
+        let arrayFiltrado = [...new Set(this.filtros().map((e) => e.category))];
+        let enComas = arrayFiltrado.join(", ");
+        if (arrayFiltrado.length === 0) return;
+        const catFitra =
+          arrayFiltrado.length > 0 &&
+          arrayFiltrado.length < this.compCatego.length
+            ? `Results in Categories: <span style="font-weight:720;">${enComas}</span>`
+            : `Results in all Categories:`;
+        return catFitra;
+      }
+    },
+  },
+}).mount("#render-pagina");

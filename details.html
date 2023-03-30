@@ -94,12 +94,32 @@
     </div>
     <div class="waves"></div>
   </section>
-  <main class="container-fluid mt-5">
+  <main id="render-pagina" class="container-fluid mt-5">
 
     <section>
+      <div v-if="!loading" style="margin-top:2rem;text-align:center;height: 40vw;"><img src="./assets/img/spinner.svg"
+          width="100"></div>
+      <div class="card-contenido w-100 card-deck d-flex flex-wrap gap-3 justify-content-center mb-3" v-else>
+        <div class="card mb-3 bg-success" style="width:80%">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <img :alt="filteredEvents.name" :src="filteredEvents.image" class="card-img-top" id="detail-img">
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h5 class="mb-4 card-title" v-text="filteredEvents.name"></h5>
+                <p class="card-subtitle mb-2 text-wrap"><strong>Description:</strong> <span
+                    v-text="filteredEvents.description"></span></p>
+                <p class="card-text"><strong>Category:</strong> <span v-text="filteredEvents.category"></span></p>
+                <p class="card-text"><strong>Place:</strong> <span v-text="filteredEvents.place"></span></p>
+                <p class="card-text"><strong>Date:</strong> <span v-text="filteredEvents.date"></span></p>
+                <p class="card-precio"><strong>Price:</strong> $<span v-text="filteredEvents.price"></span></p>
+                <a alt="Go Back" onclick="history.back()" href="#" class="btn btn-secondary hover">Go Back</a>
 
-      <div class="card-contenido w-100 card-deck d-flex flex-wrap gap-3 justify-content-center mb-3">
-
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -129,7 +149,7 @@
     </div>
   </footer><!-- End Footer -->
   <script src="./assets/js/amazing.json"></script>
-  <script src="./assets/js/detail_data.js"></script>
+  <script type="module" src="./assets/js/functions.js"></script>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
