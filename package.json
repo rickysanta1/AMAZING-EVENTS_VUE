@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/rickysanta1/AMAZING-EVENTS_GAMARRA/issues"
   },
-  "homepage": "https://github.com/rickysanta1/AMAZING-EVENTS_GAMARRA#readme"
+  "homepage": "https://github.com/rickysanta1/AMAZING-EVENTS_GAMARRA#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.3"
+  }
 }

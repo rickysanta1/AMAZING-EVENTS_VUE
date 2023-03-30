@@ -127,8 +127,9 @@
           </div>
         </div>
       </form>
-      <div class="text-center container" id="success" v-html="mensaje"></div>
     </div>
+    <div class="mb-2 text-center container" id="success" v-html="mensaje"></div>
+
     <section class="cards">
 
       <div class="card-contenido card-deck d-flex flex-wrap gap-3 justify-content-center mb-3">
@@ -148,7 +149,7 @@
                   <p class="card-precio">
                     <slot>Price: $</slot>{{item.price}}
                   </p>
-                  <p><a alt="Detail" :href="'./details.html?id='+ item._id" class="btn btn-secondary hover">Datails</a>
+                  <p><a alt="Detail" :href="'./details.html?id='+ item._id" class="btn btn-custom hover">Datails</a>
                   </p>
                 </div>
               </div>
