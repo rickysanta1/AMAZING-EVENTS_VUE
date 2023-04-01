@@ -28,6 +28,8 @@ const app = createApp({
       cap: null,
       categFuturos: {},
       categPasados: {},
+      sortBy: "category", // ordenar por defecto por categorÃ­a
+      sortDesc: false, // orden ascendente por defecto
     };
   },
   created() {
@@ -190,6 +192,49 @@ const app = createApp({
         return totals;
       }, {});
     },
+    sortCol(e, tabla) {
+      if (e.tagName != "I") return;
+      this.sortGrid(e.dataset.cell, e.dataset.type, e.dataset.orden, tabla);
+    },
+
+    sortGrid(colNum, type, orden, tabla) {
+      let tbody = document.querySelector("#" + tabla);
+
+      let rowsArray = Array.from(tbody.rows);
+
+      // compare(a, b) compara dos filas, necesario para ordenar
+      let compare;
+
+      switch (type) {
+        case "number":
+          compare = function (rowA, rowB) {
+            let a =
+              orden == 1
+                ? rowA.cells[colNum].innerHTML
+                : rowB.cells[colNum].innerHTML;
+            let b =
+              orden == 1
+                ? rowB.cells[colNum].innerHTML
+                : rowA.cells[colNum].innerHTML;
+
+            return a - b;
+          };
+          break;
+        case "string":
+          compare = function (rowA, rowB) {
+            return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML
+              ? orden
+              : -orden;
+          };
+          break;
+      }
+
+      // sort
+
+      rowsArray.sort(compare);
+
+      tbody.append(...rowsArray);
+    },
   },
   computed: {
     compCatego() {
@@ -208,5 +253,16 @@ const app = createApp({
         return catFitra;
       }
     },
+  },
+  sortData(orden, datos) {
+    datos.sort((a, b) => {
+      if (a["category"] < b["category"]) {
+        return -orden;
+      } else if (a["category"] > b["category"]) {
+        return orden;
+      } else {
+        return 0;
+      }
+    });
   },
 }).mount("#render-pagina");
